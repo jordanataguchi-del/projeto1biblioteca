@@ -1,4 +1,6 @@
-#!/tmp/guest-xjwrae/projeto1biblioteca/projeto1biblioteca/venv/bin/python3
+#!/bin/sh
+'''exec' "/tmp/guest-r0k9ae/jordana 1b/projeto1biblioteca/venv/bin/python" "$0" "$@"
+' '''
 # -*- coding: utf-8 -*-
 import re
 import sys
