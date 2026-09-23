@@ -1,3 +1,4 @@
+
 {% extends "base.html" %}
 
 
@@ -20,6 +21,7 @@
             <th>Autor</th>
             <th>Categoria</th>
             <th>Status</th>
+            <th>Ações</th>
         </tr>
     </thead>
 
@@ -32,6 +34,18 @@
             <td>{{ livro.autor }}</td>
             <td>{{ livro.categoria }}</td>
             <td>{{ livro.status }}</td>
+            <td>
+                <a href="/livros/editar/{{ livro.id_livro }}">Editar</a>
+
+
+                |
+
+
+                <a href="/livros/excluir/{{ livro.id_livro }}"
+                   onclick="return confirm('Deseja realmente excluir este livro?')">
+                    Excluir
+                </a>
+            </td>
         </tr>
         {% endfor %}
     </tbody>
@@ -39,4 +53,3 @@
 
 
 {% endblock %}
-
