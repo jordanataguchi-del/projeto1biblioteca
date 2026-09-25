@@ -1,9 +1,10 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, flash
 import mysql.connector
 from config import DB_CONFIG
 
 
 app = Flask(__name__)
+app.secret_key = "biblioteca_escolar"
 
 
 def conectar():
@@ -66,6 +67,7 @@ def cadastrar_aluno():
 
         cursor.execute(sql, valores)
         conexao.commit()
+        flash("Aluno cadastrado com sucesso!", "sucesso")
 
 
         cursor.close()
@@ -76,7 +78,10 @@ def cadastrar_aluno():
 
 
     except Exception as erro:
-        return f"Erro ao cadastrar aluno: {erro}"
+        flash(f"Erro ao cadastrar aluno: {erro}", "erro")
+        return redirect("/alunos")
+
+
 ## Rota CRUD aluno
 @app.route("/alunos/editar/<int:id_aluno>")
 def editar_aluno(id_aluno):
@@ -135,6 +140,7 @@ def atualizar_aluno(id_aluno):
 
         cursor.execute(sql, valores)
         conexao.commit()
+        flash("Aluno atualizado com sucesso!", "sucesso")
 
 
         cursor.close()
@@ -145,7 +151,9 @@ def atualizar_aluno(id_aluno):
 
 
     except Exception as erro:
-        return f"Erro ao atualizar aluno: {erro}"
+           flash(f"Erro ao atualizar aluno: {erro}", "erro")
+           return redirect("/alunos")
+
 
 
 
@@ -164,6 +172,7 @@ def excluir_aluno(id_aluno):
 
 
         conexao.commit()
+        flash("Aluno excluído com sucesso!", "sucesso")
 
 
         cursor.close()
@@ -173,8 +182,10 @@ def excluir_aluno(id_aluno):
         return redirect("/alunos")
 
 
-    except Exception as erro:
-        return f"Erro ao excluir aluno: {erro}"
+    except Exception as erro: 
+          flash("Não foi possível excluir o aluno. Verifique se ele possui empréstimos cadastrados.", "erro")
+          return redirect("/alunos")
+          return f"Erro ao excluir aluno: {erro}"
 
 # Rotas para livros
 @app.route("/livros")
